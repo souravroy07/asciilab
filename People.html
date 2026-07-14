@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People | ASCII Lab | IIT Bhilai</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #143766;
+            --secondary: #1F4E8C;
+            --accent: #A6822E;
+            --bg-main: #FFFFFF;
+            --bg-card: #F7F9FC;
+            --border: #DCE3EE;
+            --text-main: #14203A;
+            --text-muted: #55606E;
+            
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Source Sans 3', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(20, 55, 102, 0.05);
+            --shadow-md: 0 8px 24px rgba(20, 55, 102, 0.08);
+            --shadow-lg: 0 16px 48px rgba(20, 55, 102, 0.12);
+            --radius: 8px;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        section {
+            padding: 80px 5%;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding: 15px 5%;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-sub {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary);
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+        }
+
+        .breadcrumb {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--secondary);
+        }
+
+        /* Profile Cards System */
+        .people-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .profile-card {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .profile-img-container {
+            width: 100%;
+            height: 280px;
+            background-color: var(--bg-card);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Using avatars/placeholders for academic privacy */
+        .avatar-placeholder {
+            width: 100px;
+            height: 100px;
+            background-color: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+        }
+
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .profile-card:hover .profile-img-container img {
+            transform: scale(1.05);
+        }
+
+        .profile-info {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+            color: var(--primary);
+        }
+
+        .profile-role {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .profile-topic {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .profile-topic strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .profile-socials {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+
+        .social-icon {
+            color: var(--text-muted);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-decoration: none;
+            gap: 4px;
+        }
+
+        .social-icon:hover {
+            color: var(--primary);
+        }
+
+        /* Principal Investigator Specific */
+        .pi-section {
+            background-color: var(--bg-main);
+        }
+
+        .pi-card {
+            display: flex;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pi-img {
+            flex: 0 0 350px;
+            background-color: var(--primary);
+            position: relative;
+        }
+
+        .pi-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .pi-info {
+            padding: 50px;
+            flex: 1;
+        }
+
+        .pi-info .profile-name {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .pi-info .profile-role {
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .pi-bio {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .pi-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .pi-links a {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-main);
+            transition: var(--transition);
+            background: var(--bg-main);
+        }
+
+        .pi-links a:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* Alumni Section */
+        .alumni-section {
+            background-color: var(--bg-card);
+        }
+
+        .alumni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .alumni-card {
+            background: var(--bg-main);
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .alumni-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .alumni-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .alumni-name {
+            font-size: 1.125rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .alumni-year {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #fff;
+            background-color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .alumni-degree {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .alumni-thesis {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* Collaborators Section */
+        .collaborators-section {
+            background-color: var(--bg-main);
+            border-top: 1px solid var(--border);
+        }
+
+        .collab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .collab-card {
+            padding: 20px;
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            border-left: 3px solid var(--primary);
+        }
+
+        .collab-name {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .collab-dept {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .collab-inst {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            margin-top: 8px;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0A192F;
+            color: #fff;
+            padding: 80px 5% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-about h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-about p {
+            color: #8892B0;
+            font-size: 0.9rem;
+            margin-top: 16px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            color: var(--accent);
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #8892B0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links ul li a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #8892B0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .pi-card { flex-direction: column; }
+            .pi-img { flex: 0 0 300px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: var(--bg-main);
+                flex-direction: column;
+                padding: 100px 40px;
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 1.125rem; }
+            .hamburger { display: block; z-index: 1001; }
+            .page-title { font-size: 2.5rem; }
+            .pi-info { padding: 30px; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                ASCII Lab
+                <span class="logo-sub">IIT Bhilai</span>
+            </a>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="people.html" class="active">People</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Our People</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>People</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principal Investigator -->
+    <section class="pi-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Principal Investigator</h2>
+            </div>
+            
+            <div class="pi-card">
+                <div class="pi-img">
+                    <img src="https://scontent-bom2-3.xx.fbcdn.net/v/t39.30808-6/476491637_9013226615421567_4593580926780853212_n.jpg?stp=dst-jpg_tt6&cstp=mx650x645&ctp=s650x645&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=CvagYX6eEHoQ7kNvwGKLCIe&_nc_oc=AdoR61n5woJmN9vufIM7tiWJr1eR5zqXMhV2tDHKMCcXqdREkRc7Lfsgx6SolSaE8Sg&_nc_zt=23&_nc_ht=scontent-bom2-3.xx&_nc_gid=MSn73BWOiVZrqiQsEaR6VA&_nc_ss=7b2a8&oh=00_AQAjXLBzuKkNxr8OxLPhcDm5sawp-7IoqS_EydxB6i9X4w&oe=6A5BA661" alt="Dr. Avishek Adhikary">
+                </div>
+                <div class="pi-info">
+                    <h3 class="profile-name">Dr. Avishek Adhikary</h3>
+                    <div class="profile-role">Associate Professor, Department of Electrical Engineering</div>
+                    <p class="pi-bio">Dr. Adhikary directs the ASCII Lab, focusing on applied sensing, intelligent control architectures, and the deployment of autonomous systems in complex environments. His research bridges theoretical mechatronics with scalable industrial and defense applications.</p>
+                    
+                    <div class="pi-links">
+                        <a href="mailto:contact@iitbhilai.ac.in">Email</a>
+                        <a href="#">Google Scholar</a>
+                        <a href="#">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Present Members -->
+    <section class="present-members-section" style="background-color: var(--bg-main);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Current Researchers</h2>
+            </div>
+            
+            <div class="people-grid">
+                
+                <!-- Project Lead -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">CG</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Dr. Chiranjib Ghosh</h4>
+                        <div class="profile-role">Project Lead</div>
+                        <p class="profile-topic"><strong>Project:</strong> Capacity Building for Human Resource Development for Unmanned Aerial System</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                            <a href="#" class="social-icon">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PhD Student -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">DR</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Dibakar Roy</h4>
+                        <div class="profile-role">MTech-PhD Student</div>
+                        <p class="profile-topic"><strong>Thesis:</strong> Quality Assessment of Fruits and Fruit Juice using Bio Impedance Spectroscopy and Machine Learning</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PhD Student -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">SC</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Saransh Chourey</h4>
+                        <div class="profile-role">PhD Student</div>
+                        <p class="profile-topic"><strong>Research:</strong> PoC Device, Bioexcretion Sensing</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PhD Student -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">PM</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Pritika Marik</h4>
+                        <div class="profile-role">PhD Student</div>
+                        <p class="profile-topic"><strong>Research:</strong> Precision Agriculture and UAV</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PhD Student -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">MK</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Md Arif Khan</h4>
+                        <div class="profile-role">PhD Student</div>
+                        <p class="profile-topic"><strong>Research:</strong> Underwater UAV for Laser Welding</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PhD Student -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">YK</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Yogendra Kumar</h4>
+                        <div class="profile-role">PhD Student</div>
+                        <p class="profile-topic"><strong>Research:</strong> ExoSkeleton Design and Control</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PhD Student (User Override Applied for Name formatting based on context) -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQELDONsZrjOZA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1710319633082?e=1785369600&v=beta&t=5H2nhYrJJ4hOw6MKvzok6F8CUvO27JnhPXxp_PrhCtU" alt="Sourav Roy">
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Sourav Roy</h4>
+                        <div class="profile-role">PhD Student</div>
+                        <p class="profile-topic"><strong>Research:</strong> Underwater UAV for Laser Welding & ROV Inspection Systems</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                            <a href="#" class="social-icon">LinkedIn</a>
+                            <a href="#" class="social-icon">ORCID</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MTech Student -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">DS</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Debjit Sarkar</h4>
+                        <div class="profile-role">MTech Student</div>
+                        <p class="profile-topic"><strong>Research:</strong> Design of Smart Meter for Intelligent Harvesting</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MTech Student -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">YS</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Yashasvi Saxena</h4>
+                        <div class="profile-role">MTech Student</div>
+                        <p class="profile-topic"><strong>Research:</strong> Fruit Quality Analysis</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MTech Student -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">PP</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Pooja Prasad</h4>
+                        <div class="profile-role">MTech Student</div>
+                        <p class="profile-topic"><strong>Research:</strong> Milk Adulteration Detection</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BTech Student -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <div class="avatar-placeholder">RM</div>
+                    </div>
+                    <div class="profile-info">
+                        <h4 class="profile-name">Ragini V Mehta</h4>
+                        <div class="profile-role">BTech (Hons) Student</div>
+                        <p class="profile-topic"><strong>Research:</strong> Fruit Juice Quality Assessment</p>
+                        <div class="profile-socials">
+                            <a href="#" class="social-icon">Email</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Alumni Section -->
+    <section class="alumni-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Graduated Alumni</h2>
+            </div>
+            
+            <div class="alumni-grid">
+                
+                <!-- Alumni Cards -->
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Agniv Tapadar</h4>
+                    </div>
+                    <span class="alumni-degree">PhD Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Fractional Order Colpitts Oscillators for Impedimetric Analysis of Bio and Chemical Sensors</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Manish Kumar</h4>
+                    </div>
+                    <span class="alumni-degree">MTech Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Detection of Urea in Milk Samples of Different Fat Percentages Using Impedimetry Analysis</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Aashuli Sahare</h4>
+                    </div>
+                    <span class="alumni-degree">MTech Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Data Analysis based Filter Design for Biomedical Feature Extraction: ECG and Cell Malignancy</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Niladri Biswas</h4>
+                    </div>
+                    <span class="alumni-degree">MTech Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Fungal Disease Detection and Severity Assessment of Tomato Leaves Using Image Classification and Plant Pathological Scale</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Nikita Rokkam</h4>
+                    </div>
+                    <span class="alumni-degree">MTech Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Machine Learning Aided Complex Carbohydrate Distinction for Fruit Juice Analysis</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Satyam Sharma</h4>
+                    </div>
+                    <span class="alumni-degree">MTech Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Development of Machine-learning Nondestructive Ripeness Detection System for Banana using Computer Vision</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Ujjwal Bharadwaj</h4>
+                        <span class="alumni-year">2023</span>
+                    </div>
+                    <span class="alumni-degree">MTech Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Design of Optimal FO Controllers for Improvement in Transient and Steady State Response of a Buck Converter</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Swaninda Ghosh</h4>
+                        <span class="alumni-year">2023</span>
+                    </div>
+                    <span class="alumni-degree">BTech (Hons) Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Consensus controlled framework for Multi-agent System and Formation Control in a Multi-agent System</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Rohit Bose</h4>
+                        <span class="alumni-year">2023</span>
+                    </div>
+                    <span class="alumni-degree">BTech (Hons) Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Consensus Algorithm for multi-agent system and Flocking Theory</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Aakashdeep Kurre</h4>
+                        <span class="alumni-year">2021</span>
+                    </div>
+                    <span class="alumni-degree">MTech Alumni</span>
+                    <p class="alumni-thesis"><strong>Research:</strong> Study of Power Converters in Fractional Order Domain</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Kreshnan Dwivedi</h4>
+                        <span class="alumni-year">2021</span>
+                    </div>
+                    <span class="alumni-degree">MTech Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Design and Realization of OTA based Fractional Order Filters</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Harshit Bansal</h4>
+                        <span class="alumni-year">2021</span>
+                    </div>
+                    <span class="alumni-degree">BTech (Hons) Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Optimal Design of a Fractional Order Immittance in the Third Quadrant</p>
+                </div>
+
+                <div class="alumni-card">
+                    <div class="alumni-header">
+                        <h4 class="alumni-name">Srishti Sachan</h4>
+                        <span class="alumni-year">2020</span>
+                    </div>
+                    <span class="alumni-degree">BTech (Hons) Alumni</span>
+                    <p class="alumni-thesis"><strong>Thesis:</strong> Fractional Order Colpitts and Hartlay Oscillator</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Collaborators -->
+    <section class="collaborators-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Research Collaborators</h2>
+            </div>
+            
+            <div class="collab-grid">
+                
+                <div class="collab-card">
+                    <h4 class="collab-name">Dr. Suchetan Pal</h4>
+                    <div class="collab-dept">Assistant Professor, Chemistry Dept.</div>
+                    <span class="collab-inst">IIT Bhilai</span>
+                </div>
+                
+                <div class="collab-card">
+                    <h4 class="collab-name">Dr. Soumajit Pramanik</h4>
+                    <div class="collab-dept">Assistant Professor, CSE Dept.</div>
+                    <span class="collab-inst">IIT Bhilai</span>
+                </div>
+                
+                <div class="collab-card">
+                    <h4 class="collab-name">Dr. Saikat Sahoo</h4>
+                    <div class="collab-dept">Assistant Professor, Mechatronics Dept.</div>
+                    <span class="collab-inst">IIT Bhilai</span>
+                </div>
+                
+                <div class="collab-card">
+                    <h4 class="collab-name">Dr. Kaushik Bandyopadhyay</h4>
+                    <div class="collab-dept">Assistant Professor, ME Dept.</div>
+                    <span class="collab-inst">IIT Bhilai</span>
+                </div>
+                
+                <div class="collab-card">
+                    <h4 class="collab-name">Dr. Purnendu Das</h4>
+                    <div class="collab-dept">Assistant Professor, ME Dept.</div>
+                    <span class="collab-inst">IIT Bhilai</span>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>ASCII Lab</h3>
+                    <p>Applied Sensing and Control for Intelligent India.<br>Department of Electrical Engineering,<br>Indian Institute of Technology Bhilai.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="research.html">Research Areas</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="contact.html">Contact Form</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Research</h4>
+                    <ul>
+                        <li><a href="research.html">Underwater Robotics</a></li>
+                        <li><a href="research.html">Computer Vision</a></li>
+                        <li><a href="research.html">Smart Sensors</a></li>
+                        <li><a href="research.html">Autonomous Nav</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter (X)</a></li>
+                        <li><a href="#">Google Scholar</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ASCII Lab, IIT Bhilai. All rights reserved.</p>
+                <p>Designed for Academic Excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Vanilla JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sticky Navigation
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile Hamburger Menu
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                if(navLinks.classList.contains('active')) {
+                    header.classList.add('scrolled');
+                } else if(window.scrollY <= 50) {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

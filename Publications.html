@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications | ASCII Lab | IIT Bhilai</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #143766;
+            --secondary: #1F4E8C;
+            --accent: #A6822E;
+            --bg-main: #FFFFFF;
+            --bg-card: #F7F9FC;
+            --border: #DCE3EE;
+            --text-main: #14203A;
+            --text-muted: #55606E;
+            
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Source Sans 3', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(20, 55, 102, 0.05);
+            --shadow-md: 0 8px 24px rgba(20, 55, 102, 0.08);
+            --shadow-lg: 0 16px 48px rgba(20, 55, 102, 0.12);
+            --radius: 8px;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        section {
+            padding: 80px 5%;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding: 15px 5%;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-sub {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary);
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+        }
+
+        .breadcrumb {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--secondary);
+        }
+
+        /* Filter Controls */
+        .filter-section {
+            background-color: var(--bg-main);
+            padding: 30px 5%;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 70px;
+            z-index: 99;
+        }
+
+        .filter-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .stats-summary {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        /* Publication List */
+        .publications-container {
+            padding: 60px 5%;
+            background-color: var(--bg-main);
+            min-height: 50vh;
+        }
+
+        .year-section {
+            margin-bottom: 60px;
+        }
+
+        .year-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .year-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: var(--border);
+        }
+
+        .pub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .pub-card {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 24px 30px;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .pub-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(5px);
+            border-color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .pub-content {
+            flex: 1;
+        }
+
+        .pub-title {
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .pub-authors {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        /* Highlighting Principal Investigator & Key Researchers */
+        .author-highlight {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .pub-venue {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .pub-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .pub-type {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: var(--bg-card);
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            text-transform: uppercase;
+        }
+
+        .pub-citations {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .pub-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 100px;
+        }
+
+        .pub-btn {
+            text-align: center;
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--secondary);
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            background: var(--bg-main);
+        }
+
+        .pub-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .pub-btn.pdf {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .pub-btn.pdf:hover {
+            background: #8C6D25;
+            border-color: #8C6D25;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0A192F;
+            color: #fff;
+            padding: 80px 5% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-about h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-about p {
+            color: #8892B0;
+            font-size: 0.9rem;
+            margin-top: 16px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            color: var(--accent);
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #8892B0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links ul li a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #8892B0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: var(--bg-main);
+                flex-direction: column;
+                padding: 100px 40px;
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 1.125rem; }
+            .hamburger { display: block; z-index: 1001; }
+            
+            .page-title { font-size: 2.5rem; }
+            .filter-container { flex-direction: column; align-items: flex-start; }
+            .pub-card { flex-direction: column; }
+            .pub-actions { width: 100%; flex-direction: row; flex-wrap: wrap; }
+            .pub-btn { flex: 1; min-width: 80px; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                ASCII Lab
+                <span class="logo-sub">IIT Bhilai</span>
+            </a>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="people.html">People</a></li>
+                    <li><a href="publications.html" class="active">Publications</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Publications</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>Publications</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Controls -->
+    <div class="filter-section">
+        <div class="filter-container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="journal">Journals</button>
+                <button class="filter-btn" data-filter="conference">Conferences</button>
+                <button class="filter-btn" data-filter="book">Book Chapters</button>
+            </div>
+            <div class="stats-summary">
+                Total Citations: 633+
+            </div>
+        </div>
+    </div>
+
+    <!-- Publications List -->
+    <div class="publications-container">
+        <div class="container">
+
+            <!-- 2026 -->
+            <div class="year-section">
+                <h2 class="year-title">2026</h2>
+                <div class="pub-list">
+                    
+                    <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">A Disposable Sensor for the Fast Estimation of Urine Urea using Single Frequency Impedimetry</h3>
+                            <div class="pub-authors">S Chourey, A Bose, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">2026 IEEE Applied Sensing Conference (APSCON), 1-4</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">A Disposable Sensor Combined with LDA-SVM for Rapid Detection of Milk Fat Percentage and Water Adulteration</h3>
+                            <div class="pub-authors">P Prasad, A Bose, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">2026 IEEE Applied Sensing Conference (APSCON), 1-4</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Identification of Adulteration and Brands of Packaged Mango Juices using KNN model on LDA-Reduced Hydrogel Impedance Data</h3>
+                            <div class="pub-authors">RV Mehta, S Kaiwart, D Roy, S Pal, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">IEEE Sensors Letters</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Real-Time Mobile Application for Detecting Tomato Leaf Diseases Early Blight, Septoria Leaf Spot, and Healthy Leaves Using Transfer Learning with VGG16</h3>
+                            <div class="pub-authors">S Saurav, D Karmakar, P Das, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">2026 International Conference on Electric Power and Renewable Energy (EPREC)</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                                <span class="pub-citations">Cited by: 2</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+                    
+                     <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Single Parameter Based Papaya Ripe Stage Classification Using Electrical Equivalent Modelling</h3>
+                            <div class="pub-authors">S Chourey, Y Saxena, D Roy, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">2026 International Conference on Electric Power and Renewable Energy (EPREC)</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">CO2 Source Tracking With UAV and WASG</h3>
+                            <div class="pub-authors">HK Sahu, P Marik, C Ghosh, S Pramanik, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">2026 International Conference on Electric Power and Renewable Energy (EPREC)</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2025 -->
+            <div class="year-section">
+                <h2 class="year-title">2025</h2>
+                <div class="pub-list">
+                    
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">An IoT-Based Real-Time Elevator Health Monitoring System Using LSTM Autoencoder</h3>
+                            <div class="pub-authors">Y Kumar, MA Khan, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">IEEE Sensors Letters 10 (2), 1-4</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 1</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Ripe Stage Identification of Amrapali Mango Using QSVM Classifier on Six-Point Impedance Phase Data</h3>
+                            <div class="pub-authors">D Roy, C Ghosh, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">IEEE Transactions on Instrumentation and Measurement 74, 1-8</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 1</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Real-Time Surface Classification and Crack Enumeration on Underwater Metallic Structures Using DenseNet201 and YOLOv8</h3>
+                            <div class="pub-authors">MA Khan, S Saurav, K Bandyopadhyay, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">2025 IEEE SENSORS, 1-4</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                                <span class="pub-citations">Cited by: 1</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Feed Forward Neural Network Based Automated Gas Source Localization Using Uav: a Case Study on Source Tracking</h3>
+                            <div class="pub-authors">HK Sahu, P Marik, C Ghosh, S Pramanik, K Bandyopadhyay, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">2025 IEEE SENSORS, 1-4</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Autonomous CO2 Source Detection with UAVs Using Reinforcement Learning</h3>
+                            <div class="pub-authors">HK Sahu, P Marik, A Ruidas, C Ghosh, S Pramanik, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">2025 International Conference on Emerging Technology in Autonomous Aerial Systems</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                                <span class="pub-citations">Cited by: 1</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Reinforcement learning based autonomous UAV navigation for CO source localization</h3>
+                            <div class="pub-authors">P Marik, HK Sahu, C Ghosh, A Ruidas, S Pramanik, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">IEEE Sensors Letters</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 2</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Detection of early blight and septoria leaf spot from tomato leaf image using customized cnn model with atrous convolution layer</h3>
+                            <div class="pub-authors"><span class="author-highlight">A Adhikary</span>, D Karmakar, S Saurav, P Das</div>
+                            <div class="pub-venue">2025 23rd IEEE Interregional NEWCAS Conference (NEWCAS), 143-147</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                                <span class="pub-citations">Cited by: 2</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Ripe stage detection and optimal ripe hours prediction of a banana using modified fractional order colpitts oscillator</h3>
+                            <div class="pub-authors">A Tapadar, D Roy, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">IEEE Transactions on Instrumentation and Measurement 74, 1-9</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 6</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="year-section">
+                <h2 class="year-title">2024</h2>
+                <div class="pub-list">
+                    
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Low temperature one-pot synthesis of rGO nanorod-PVDF composite and fabrication of a thin film solid-state fractional order device</h3>
+                            <div class="pub-authors">MR Samantaray, A Tapadar, S Das, N Chander, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">IEEE Transactions on Nanotechnology 23, 692-695</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 2</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Modified colpitts oscillator with lossy fractor for the biosensors with single Cole model and its application in water urea sensing</h3>
+                            <div class="pub-authors">A Bose, A Tapadar, S Khairnar, Y Mandawat, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">IEEE Transactions on Instrumentation and Measurement 73, 1-8</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 3</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Classification of sugar samples from PCA-reduced impedimetric data using QD model</h3>
+                            <div class="pub-authors">D Roy, A Ali, S Pal, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">IEEE Transactions on Instrumentation and Measurement 73, 1-8</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 4</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="conference">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Ripening stage assessment of royal gala apple using KNN on PCA reduced bio-impedance data</h3>
+                            <div class="pub-authors">D Roy, A Rangare, R Kaushik, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">2024 IEEE Applied Sensing Conference (APSCON), 1-4</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Conference</span>
+                                <span class="pub-citations">Cited by: 10</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Older significant publications -->
+            <div class="year-section">
+                <h2 class="year-title">Selected Earlier Publications</h2>
+                <div class="pub-list">
+                    
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Impedimetric hydrogel sensor for the identification of hexose using machine learning</h3>
+                            <div class="pub-authors">D Roy, A Ali, S Pal, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">IEEE Sensors Journal 23 (6), 6272-6281 (2023)</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 14</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="book">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Fractional calculus in electronic circuits: A review</h3>
+                            <div class="pub-authors">A Tapadar, FA Khanday, S Sen, <span class="author-highlight">A Adhikary</span></div>
+                            <div class="pub-venue">Fractional Order Systems, 441-482 (2022)</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Book Chapter</span>
+                                <span class="pub-citations">Cited by: 30</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Optimal design for realizing a grounded fractional order inductor using GIC</h3>
+                            <div class="pub-authors"><span class="author-highlight">A Adhikary</span>, S Choudhary, S Sen</div>
+                            <div class="pub-venue">IEEE Transactions on Circuits and Systems I: Regular Papers 65 (8), 2411-2421 (2018)</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 82</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Design and performance study of dynamic fractors in any of the four quadrants</h3>
+                            <div class="pub-authors"><span class="author-highlight">A Adhikary</span>, P Sen, S Sen, K Biswas</div>
+                            <div class="pub-venue">Circuits, Systems, and Signal Processing 35 (6), 1909-1932 (2016)</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 97</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+                    
+                    <div class="pub-card" data-type="journal">
+                        <div class="pub-content">
+                            <h3 class="pub-title">Practical realization of tunable fractional order parallel resonator and fractional order filters</h3>
+                            <div class="pub-authors"><span class="author-highlight">A Adhikary</span>, S Sen, K Biswas</div>
+                            <div class="pub-venue">IEEE Transactions on Circuits and Systems I: Regular Papers 63 (8), 1142-1151 (2016)</div>
+                            <div class="pub-meta">
+                                <span class="pub-type">Journal</span>
+                                <span class="pub-citations">Cited by: 152</span>
+                            </div>
+                        </div>
+                        <div class="pub-actions">
+                            <button class="pub-btn">DOI</button>
+                            <button class="pub-btn">BibTeX</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>ASCII Lab</h3>
+                    <p>Applied Sensing and Control for Intelligent India.<br>Department of Electrical Engineering,<br>Indian Institute of Technology Bhilai.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="research.html">Research Areas</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="contact.html">Contact Form</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Research</h4>
+                    <ul>
+                        <li><a href="research.html">Underwater Robotics</a></li>
+                        <li><a href="research.html">Computer Vision</a></li>
+                        <li><a href="research.html">Smart Sensors</a></li>
+                        <li><a href="research.html">Autonomous Nav</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter (X)</a></li>
+                        <li><a href="#">Google Scholar</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ASCII Lab, IIT Bhilai. All rights reserved.</p>
+                <p>Designed for Academic Excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Vanilla JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sticky Navigation
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile Hamburger Menu
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                if(navLinks.classList.contains('active')) {
+                    header.classList.add('scrolled');
+                } else if(window.scrollY <= 50) {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Filtering Logic
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const pubCards = document.querySelectorAll('.pub-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    pubCards.forEach(card => {
+                        if (filterValue === 'all') {
+                            card.style.display = 'flex';
+                        } else if (card.getAttribute('data-type') === filterValue) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

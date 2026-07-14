@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Events | ASCII Lab | IIT Bhilai</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #143766;
+            --secondary: #1F4E8C;
+            --accent: #A6822E;
+            --bg-main: #FFFFFF;
+            --bg-card: #F7F9FC;
+            --border: #DCE3EE;
+            --text-main: #14203A;
+            --text-muted: #55606E;
+            
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Source Sans 3', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(20, 55, 102, 0.05);
+            --shadow-md: 0 8px 24px rgba(20, 55, 102, 0.08);
+            --shadow-lg: 0 16px 48px rgba(20, 55, 102, 0.12);
+            --radius: 8px;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        section {
+            padding: 80px 5%;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding: 15px 5%;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-sub {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary);
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+        }
+
+        .breadcrumb {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--secondary);
+        }
+
+        /* Timeline Design */
+        .timeline-section {
+            background-color: var(--bg-main);
+            padding: 80px 5%;
+        }
+
+        .timeline-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 30px;
+            height: 100%;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 4px solid var(--bg-main);
+            box-shadow: 0 0 0 2px var(--border);
+            z-index: 2;
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .timeline-content {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: -8px;
+            width: 15px;
+            height: 15px;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            transform: rotate(45deg);
+        }
+
+        .timeline-content:hover {
+            box-shadow: var(--shadow-sm);
+            border-color: var(--primary);
+        }
+
+        .timeline-content:hover::before {
+            border-color: var(--primary);
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .timeline-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .timeline-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-main);
+            margin-top: 16px;
+        }
+
+        /* Events Grid */
+        .events-section {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .event-card {
+            background: var(--bg-main);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-5px);
+        }
+
+        .event-img {
+            height: 200px;
+            position: relative;
+            background-color: var(--primary);
+        }
+
+        .event-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-date-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .event-date-badge .day {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .event-date-badge .month {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .event-details {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-type {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .event-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .event-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .event-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-main);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0A192F;
+            color: #fff;
+            padding: 80px 5% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-about h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-about p {
+            color: #8892B0;
+            font-size: 0.9rem;
+            margin-top: 16px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            color: var(--accent);
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #8892B0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links ul li a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #8892B0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: var(--bg-main);
+                flex-direction: column;
+                padding: 100px 40px;
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 1.125rem; }
+            .hamburger { display: block; z-index: 1001; }
+            
+            .page-title { font-size: 2.5rem; }
+            
+            .timeline-container::before { left: 20px; }
+            .timeline-item { padding-left: 50px; }
+            .timeline-item::before { left: 14px; }
+            .timeline-content::before { display: none; }
+            
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                ASCII Lab
+                <span class="logo-sub">IIT Bhilai</span>
+            </a>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="people.html">People</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="news.html" class="active">News</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">News & Announcements</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>News</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Lab Timeline</h2>
+                <p class="section-subtitle">The latest achievements, milestones, and updates from ASCII Lab.</p>
+            </div>
+            
+            <div class="timeline-container">
+                
+                <div class="timeline-item">
+                    <span class="timeline-date">June 2026</span>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Experimental Dataset Construction Completed</h3>
+                        <p class="timeline-text">ASCII Lab has successfully concluded Phase 1 of our underwater experimental data collection. Utilizing a custom-fabricated volumetric glass tank and the FIFISH V6 Expert drone, the team has curated a high-fidelity dataset for training robust structural inspection and metal corrosion detection models.</p>
+                        <span class="timeline-tag">Research Update</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-date">May 2026</span>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">New Manuscript Submitted to IEEE Sensor Letters</h3>
+                        <p class="timeline-text">Our latest research titled "Real-Time Water and Surface Classification and Crack Enumeration on Underwater Metallic Structures," spearheaded by PhD Researcher Sourav Roy and Dr. Avishek Adhikary, has been submitted for peer review. The paper details a novel methodology utilizing YOLOv8 and DenseNet-201 architectures for degraded aquatic environments.</p>
+                        <span class="timeline-tag">Publication</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-date">March 2026</span>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">MeitY Funds Unmanned Aircraft Systems Project</h3>
+                        <p class="timeline-text">ASCII Lab is proud to announce a new research grant funded by the Ministry of Electronics and Information Technology (MeitY). The project focuses on "Capacity Building for Human Resource Development for Unmanned Aerial Systems." A recruitment drive for a Principal Associate position was successfully conducted.</p>
+                        <span class="timeline-tag">Funding & Grants</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-date">February 2026</span>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Strong Presence at IEEE APSCON 2026</h3>
+                        <p class="timeline-text">Multiple researchers from ASCII Lab presented their findings at the IEEE Applied Sensing Conference (APSCON). Presentations included innovative work on disposable sensors for rapid impedimetry and the integration of LDA-SVM for fluid adulteration detection.</p>
+                        <span class="timeline-tag">Conference</span>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="timeline-date">September 2025</span>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">ASCII Lab Officially Inaugurated at IIT Bhilai</h3>
+                        <p class="timeline-text">The Applied Sensing and Control for Intelligent India (ASCII) Lab was formally established in the Department of Electrical Engineering at IIT Bhilai under the direction of Dr. Avishek Adhikary, paving the way for advanced mechatronics and AI research.</p>
+                        <span class="timeline-tag">Milestone</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="events-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Upcoming Events</h2>
+                <p class="section-subtitle">Workshops, Seminars, and Bootcamps hosted by ASCII Lab.</p>
+            </div>
+            
+            <div class="events-grid">
+                
+                <div class="event-card">
+                    <div class="event-img">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800" alt="Audience at a conference">
+                        <div class="event-date-badge">
+                            <span class="day">12</span>
+                            <span class="month">Aug</span>
+                        </div>
+                    </div>
+                    <div class="event-details">
+                        <span class="event-type">Bootcamp</span>
+                        <h3 class="event-title">Intelligent Control and Machine Learning for UAVs</h3>
+                        <p class="event-desc">An intensive 3-day bootcamp covering the fundamentals of autonomous navigation, ROS2 integration, and deploying computer vision models on embedded flight controllers.</p>
+                        <div class="event-meta">
+                            <span>📍 EE Block, IIT Bhilai</span>
+                            <span>⏱️ 09:00 AM - 05:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-img">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" alt="Seminar Presentation">
+                        <div class="event-date-badge">
+                            <span class="day">24</span>
+                            <span class="month">Sep</span>
+                        </div>
+                    </div>
+                    <div class="event-details">
+                        <span class="event-type">Research Seminar</span>
+                        <h3 class="event-title">Advances in Fractional Order Systems</h3>
+                        <p class="event-desc">Dr. Avishek Adhikary will present the latest findings on the realization of fractional order elements and their application in biomedical and chemical sensing.</p>
+                        <div class="event-meta">
+                            <span>📍 Seminar Hall A</span>
+                            <span>⏱️ 02:00 PM - 03:30 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-img">
+                        <img src="https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&q=80&w=800" alt="Underwater Robotics">
+                        <div class="event-date-badge">
+                            <span class="day">05</span>
+                            <span class="month">Oct</span>
+                        </div>
+                    </div>
+                    <div class="event-details">
+                        <span class="event-type">Open Lab Day</span>
+                        <h3 class="event-title">ASCII Lab Fall Open House</h3>
+                        <p class="event-desc">Prospective PhD and MTech students are invited to tour the lab, interact with current researchers, and view live demonstrations of our ROV and UAV platforms.</p>
+                        <div class="event-meta">
+                            <span>📍 ASCII Lab</span>
+                            <span>⏱️ 10:00 AM - 01:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>ASCII Lab</h3>
+                    <p>Applied Sensing and Control for Intelligent India.<br>Department of Electrical Engineering,<br>Indian Institute of Technology Bhilai.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="research.html">Research Areas</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="contact.html">Contact Form</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Research</h4>
+                    <ul>
+                        <li><a href="research.html">Underwater Robotics</a></li>
+                        <li><a href="research.html">Computer Vision</a></li>
+                        <li><a href="research.html">Smart Sensors</a></li>
+                        <li><a href="research.html">Autonomous Nav</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter (X)</a></li>
+                        <li><a href="#">Google Scholar</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ASCII Lab, IIT Bhilai. All rights reserved.</p>
+                <p>Designed for Academic Excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sticky Navigation
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile Hamburger Menu
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                if(navLinks.classList.contains('active')) {
+                    header.classList.add('scrolled');
+                } else if(window.scrollY <= 50) {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

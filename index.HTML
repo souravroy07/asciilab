@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Lab | Applied Sensing and Control for Intelligent India | IIT Bhilai</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #143766;
+            --secondary: #1F4E8C;
+            --accent: #A6822E;
+            --bg-main: #FFFFFF;
+            --bg-card: #F7F9FC;
+            --border: #DCE3EE;
+            --text-main: #14203A;
+            --text-muted: #55606E;
+            
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Source Sans 3', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(20, 55, 102, 0.05);
+            --shadow-md: 0 8px 24px rgba(20, 55, 102, 0.08);
+            --shadow-lg: 0 16px 48px rgba(20, 55, 102, 0.12);
+            --radius: 8px;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        section {
+            padding: 100px 5%;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #8C6D25;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .btn-outline:hover {
+            background-color: #fff;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            background: transparent;
+            padding: 20px 5%;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding: 15px 5%;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header.scrolled .logo {
+            color: var(--primary);
+        }
+
+        .logo-sub {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        header.scrolled .nav-links a {
+            color: var(--text-main);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        header.scrolled .nav-links a:hover, header.scrolled .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: #fff;
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled .hamburger span {
+            background-color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(rgba(20, 55, 102, 0.85), rgba(20, 55, 102, 0.95)), 
+                        url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2000') center/cover;
+            color: #fff;
+            padding: 0 5%;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero-dept {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.75rem;
+            font-weight: 300;
+            margin-bottom: 24px;
+            color: #E2E8F0;
+        }
+
+        .hero-inst {
+            font-size: 1.125rem;
+            margin-bottom: 40px;
+            color: #CBD5E1;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* About Preview */
+        .about-preview {
+            background-color: var(--bg-main);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 24px;
+            font-size: 1.125rem;
+            color: var(--text-muted);
+        }
+
+        .mission-vision {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .mv-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--accent);
+        }
+
+        .mv-card h4 {
+            margin-bottom: 12px;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Research Highlights */
+        .research-preview {
+            background-color: var(--bg-card);
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .research-card {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .research-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .research-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .rc-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--primary);
+        }
+
+        .rc-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .research-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+        }
+
+        .research-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .read-more {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .read-more::after {
+            content: '→';
+            transition: transform 0.3s;
+        }
+
+        .research-card:hover .read-more::after {
+            transform: translateX(5px);
+        }
+
+        /* Statistics */
+        .statistics {
+            background-color: var(--primary);
+            color: #fff;
+            padding: 80px 5%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item .counter {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stat-item .label {
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 1px;
+            color: #CBD5E1;
+        }
+
+        /* Featured Projects */
+        .projects-preview {
+            background-color: var(--bg-main);
+        }
+
+        .project-card {
+            display: flex;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 40px;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .project-img {
+            flex: 0 0 45%;
+            position: relative;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .project-content {
+            padding: 40px;
+            flex: 1;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .project-meta span {
+            background: var(--bg-card);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .project-content p {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* Featured Publications */
+        .publications-preview {
+            background-color: var(--bg-card);
+        }
+
+        .pub-card {
+            background: var(--bg-main);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .pub-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+
+        .pub-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .pub-authors {
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .pub-journal {
+            font-style: italic;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+        }
+
+        .pub-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 16px;
+        }
+
+        .pub-link {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 500;
+            color: var(--secondary);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .pub-link:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* News & Timeline */
+        .news-preview {
+            background-color: var(--bg-main);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            height: 100%;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 4px solid var(--bg-main);
+            box-shadow: 0 0 0 2px var(--border);
+        }
+
+        .time-date {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .timeline-item h4 {
+            font-size: 1.125rem;
+            margin-bottom: 8px;
+        }
+
+        .timeline-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Team Preview */
+        .team-preview {
+            background-color: var(--bg-card);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            text-align: center;
+            background: var(--bg-main);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .team-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-5px);
+        }
+
+        .team-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background-color: var(--border);
+            overflow: hidden;
+        }
+
+        .team-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-card h4 {
+            font-size: 1.125rem;
+            margin-bottom: 4px;
+        }
+
+        .team-role {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .team-interest {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Logos */
+        .collaborators {
+            padding: 60px 5%;
+            background: var(--bg-main);
+            border-top: 1px solid var(--border);
+        }
+
+        .logo-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            opacity: 0.6;
+            filter: grayscale(100%);
+            transition: var(--transition);
+        }
+
+        .logo-grid:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+        }
+
+        .logo-item {
+            height: 60px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0A192F;
+            color: #fff;
+            padding: 80px 5% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-about h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-about p {
+            color: #8892B0;
+            font-size: 0.9rem;
+            margin-top: 16px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            color: var(--accent);
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #8892B0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links ul li a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #8892B0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .project-card { flex-direction: column; }
+            .project-img { flex: 0 0 250px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: var(--bg-main);
+                flex-direction: column;
+                padding: 100px 40px;
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { color: var(--text-main); font-size: 1.125rem; }
+            header.scrolled .hamburger span, .hamburger span { background-color: var(--primary); }
+            .hamburger { display: block; z-index: 1001; }
+            .hero-title { font-size: 3rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                ASCII Lab
+                <span class="logo-sub">IIT Bhilai</span>
+            </a>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="people.html">People</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-dept">Department of Electrical Engineering</span>
+            <h1 class="hero-title">ASCII LAB</h1>
+            <h2 class="hero-subtitle">Applied Sensing and Control for Intelligent India</h2>
+            <p class="hero-inst">Indian Institute of Technology Bhilai</p>
+            <div class="hero-btns">
+                <a href="research.html" class="btn btn-primary">Explore Research</a>
+                <a href="projects.html" class="btn btn-outline">Our Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-preview">
+        <div class="container about-grid">
+            <div class="about-text">
+                <h2 class="section-title">Advancing Autonomous Frontiers</h2>
+                <p>ASCII Lab conducts interdisciplinary research bridging intelligent sensing, robotics, computer vision, and cyber-physical technologies. We are dedicated to formulating robust solutions for real-world engineering challenges.</p>
+                <p>Our core focus encompasses the development of intelligent robotic systems specifically engineered for underwater inspection, structural health monitoring, and advanced autonomous navigation using state-of-the-art machine learning frameworks.</p>
+                
+                <div class="mission-vision">
+                    <div class="mv-card">
+                        <h4>Mission</h4>
+                        <p style="font-size: 0.9rem; margin:0;">To engineer intelligent, reliable, and scalable sensing and control architectures for autonomous systems operating in complex environments.</p>
+                    </div>
+                    <div class="mv-card">
+                        <h4>Vision</h4>
+                        <p style="font-size: 0.9rem; margin:0;">To establish a world-class center of excellence driving indigenous innovation in intelligent mechatronics and AI for India.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&q=80&w=800" alt="Laboratory Research Equipment">
+            </div>
+        </div>
+    </section>
+
+    <section class="research-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Research Domains</h2>
+                <p class="section-subtitle">Pioneering advancements across interconnected disciplines to develop resilient cyber-physical systems.</p>
+            </div>
+            <div class="research-grid">
+                <div class="research-card">
+                    <div class="rc-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-6.5-3.25L12 3l6.5 3.25L12 9.5zM2 12l10 5 10-5M2 17l10 5 10-5" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                    </div>
+                    <h3>Underwater Robotics</h3>
+                    <p>Development of Remotely Operated Vehicles (ROV) and AUVs for inspection, featuring subsea localization and structural health monitoring frameworks.</p>
+                    <a href="research.html" class="read-more">Read More</a>
+                </div>
+                <div class="research-card">
+                    <div class="rc-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                    </div>
+                    <h3>Computer Vision</h3>
+                    <p>Leveraging deep learning architectures (like YOLOv8 and DenseNet) for robust digital image processing, crack enumeration, and object detection in highly degraded visual environments.</p>
+                    <a href="research.html" class="read-more">Read More</a>
+                </div>
+                <div class="research-card">
+                    <div class="rc-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                    </div>
+                    <h3>Mechatronics & Control</h3>
+                    <p>Designing sophisticated embedded systems, intelligent control mechanisms, and autonomous navigation algorithms for UAVs and industrial automation.</p>
+                    <a href="research.html" class="read-more">Read More</a>
+                </div>
+                <div class="research-card">
+                    <div class="rc-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 2v20M16 2v20M2 8h20M2 16h20" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                    </div>
+                    <h3>Smart Sensing</h3>
+                    <p>Sensor fusion and non-destructive testing (NDT) approaches for structural evaluation, integrating IoT and FPGA systems for real-time edge processing.</p>
+                    <a href="research.html" class="read-more">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="statistics">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <span class="counter" data-target="5">0</span>
+                <span class="label">Years of Research</span>
+            </div>
+            <div class="stat-item">
+                <span class="counter" data-target="12">0</span>
+                <span class="label">Projects</span>
+            </div>
+            <div class="stat-item">
+                <span class="counter" data-target="34">0</span>
+                <span class="label">Publications</span>
+            </div>
+            <div class="stat-item">
+                <span class="counter" data-target="3">0</span>
+                <span class="label">Patents</span>
+            </div>
+            <div class="stat-item">
+                <span class="counter" data-target="28">0</span>
+                <span class="label">Students Mentored</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Translating academic inquiry into deployable technological solutions.</p>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&q=80&w=800" alt="UAV System">
+                </div>
+                <div class="project-content">
+                    <div class="project-meta">
+                        <span>Funded by MeitY</span>
+                        <span>Ongoing</span>
+                    </div>
+                    <h3>Unmanned Aircraft Systems Initiative</h3>
+                    <p>Development and integration of advanced payload sensing and autonomous flight control algorithms for Unmanned Aircraft Systems. This principal project involves designing robust embedded frameworks for real-time data acquisition and tactical path planning in varying environmental conditions.</p>
+                    <a href="projects.html" class="btn btn-outline" style="color: var(--primary); border-color: var(--primary);">View Details</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?auto=format&fit=crop&q=80&w=800" alt="Underwater ROV">
+                </div>
+                <div class="project-content">
+                    <div class="project-meta">
+                        <span>Institute Funding</span>
+                        <span>Ongoing</span>
+                    </div>
+                    <h3>Underwater Metal Corrosion Detection using FIFISH V6 Expert</h3>
+                    <p>Establishing an experimental framework utilizing the FIFISH V6 Expert underwater drone to construct high-fidelity datasets within controlled environments. The project focuses on deploying machine learning pipelines to detect and quantify metal corrosion and structural defects autonomously.</p>
+                    <a href="projects.html" class="btn btn-outline" style="color: var(--primary); border-color: var(--primary);">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="publications-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Latest Publications</h2>
+            </div>
+            <div class="pub-card">
+                <h3 class="pub-title">Real-Time Water and Surface Classification and Crack Enumeration on Underwater Metallic Structures</h3>
+                <p class="pub-authors">S. Roy, A. Adhikary</p>
+                <p class="pub-journal">IEEE Sensor Letters, 2026. (Under Review)</p>
+                <div class="pub-actions">
+                    <a href="#" class="pub-link">DOI</a>
+                    <a href="#" class="pub-link">PDF</a>
+                </div>
+            </div>
+            <div class="pub-card">
+                <h3 class="pub-title">Autonomous Navigation and Obstacle Avoidance for Submersibles via DenseNet-201 Feature Extraction</h3>
+                <p class="pub-authors">Research Group</p>
+                <p class="pub-journal">International Conference on Robotics and Automation (ICRA), 2025.</p>
+                <div class="pub-actions">
+                    <a href="#" class="pub-link">DOI</a>
+                    <a href="#" class="pub-link">PDF</a>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="publications.html" class="btn btn-outline" style="color: var(--primary); border-color: var(--border);">All Publications</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Latest News</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="time-date">May 2026</span>
+                    <h4>Experimental Dataset Construction Completed</h4>
+                    <p>The lab successfully completed experimental data collection utilizing the custom glass tank and the FIFISH V6 Expert underwater drone for our upcoming structural inspection models.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="time-date">April 2026</span>
+                    <h4>Manuscript Submitted to IEEE</h4>
+                    <p>New research paper detailing our real-time crack enumeration methodology using YOLOv8 architectures submitted for review.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="time-date">March 2026</span>
+                    <h4>New Openings in MeitY UAS Project</h4>
+                    <p>ASCII Lab announced openings for the Principal Associate position under the recently funded MeitY Unmanned Aircraft Systems project.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Team</h2>
+                <p class="section-subtitle">A multidisciplinary collective of researchers driven by innovation.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-img">
+                        <img src="https://scontent-bom2-3.xx.fbcdn.net/v/t39.30808-6/476491637_9013226615421567_4593580926780853212_n.jpg?stp=dst-jpg_tt6&cstp=mx650x645&ctp=s650x645&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=CvagYX6eEHoQ7kNvwGKLCIe&_nc_oc=AdoR61n5woJmN9vufIM7tiWJr1eR5zqXMhV2tDHKMCcXqdREkRc7Lfsgx6SolSaE8Sg&_nc_zt=23&_nc_ht=scontent-bom2-3.xx&_nc_gid=MSn73BWOiVZrqiQsEaR6VA&_nc_ss=7b2a8&oh=00_AQAjXLBzuKkNxr8OxLPhcDm5sawp-7IoqS_EydxB6i9X4w&oe=6A5BA661" alt="Dr. Avishek Adhikary">
+                    </div>
+                    <h4>Dr. Avishek Adhikary</h4>
+                    <p class="team-role">Principal Investigator</p>
+                    <p class="team-interest">Intelligent Control, Cyber Physical Systems</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-img">
+                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQELDONsZrjOZA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1710319633082?e=1785369600&v=beta&t=5H2nhYrJJ4hOw6MKvzok6F8CUvO27JnhPXxp_PrhCtU" alt="Sourav Roy">
+                    </div>
+                    <h4>Sourav Roy</h4>
+                    <p class="team-role">PhD Researcher / Founder</p>
+                    <p class="team-interest">Mechatronics, Underwater Robotics, Computer Vision</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-img">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" alt="Researcher Openings">
+                    </div>
+                    <h4>Admissions Open</h4>
+                    <p class="team-role">PhD / MTech Students</p>
+                    <p class="team-interest">Join us to work on cutting-edge AI & Robotics</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="people.html" class="btn btn-primary">Meet The Full Team</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="collaborators">
+        <div class="container">
+            <div class="logo-grid">
+                <div class="logo-item">MeitY, Govt of India</div>
+                <div class="logo-item">IIT Bhilai</div>
+                <div class="logo-item">XXXX</div>
+                <div class="logo-item">XXXX </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>ASCII Lab</h3>
+                    <p>Applied Sensing and Control for Intelligent India.<br>Department of Electrical Engineering,<br>Indian Institute of Technology Bhilai.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="research.html">Research Areas</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="contact.html">Contact Form</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Research</h4>
+                    <ul>
+                        <li><a href="research.html">Underwater Robotics</a></li>
+                        <li><a href="research.html">Computer Vision</a></li>
+                        <li><a href="research.html">Smart Sensors</a></li>
+                        <li><a href="research.html">Autonomous Nav</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter (X)</a></li>
+                        <li><a href="#">Google Scholar</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ASCII Lab, IIT Bhilai. All rights reserved.</p>
+                <p>Designed for Academic Excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Sticky Navigation
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile Hamburger Menu
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                if(navLinks.classList.contains('active')) {
+                    header.classList.add('scrolled');
+                } else if(window.scrollY <= 50) {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Animated Counters utilizing IntersectionObserver
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200; 
+
+            const animateCounters = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = +counter.getAttribute('data-target');
+                        
+                        const updateCount = () => {
+                            const count = +counter.innerText;
+                            const inc = target / speed;
+                            
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count + inc);
+                                setTimeout(updateCount, 15);
+                            } else {
+                                counter.innerText = target;
+                                if(target > 10) counter.innerText = target + '+';
+                            }
+                        };
+                        
+                        updateCount();
+                        observer.unobserve(counter);
+                    }
+                });
+            };
+
+            const counterObserver = new IntersectionObserver(animateCounters, {
+                threshold: 0.5
+            });
+
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+        });
+    </script>
+</body>
+</html>

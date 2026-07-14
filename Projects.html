@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | ASCII Lab | IIT Bhilai</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #143766;
+            --secondary: #1F4E8C;
+            --accent: #A6822E;
+            --bg-main: #FFFFFF;
+            --bg-card: #F7F9FC;
+            --border: #DCE3EE;
+            --text-main: #14203A;
+            --text-muted: #55606E;
+            
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Source Sans 3', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(20, 55, 102, 0.05);
+            --shadow-md: 0 8px 24px rgba(20, 55, 102, 0.08);
+            --shadow-lg: 0 16px 48px rgba(20, 55, 102, 0.12);
+            --radius: 8px;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        section {
+            padding: 80px 5%;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: left;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding: 15px 5%;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-sub {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary);
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+        }
+
+        .page-description {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .breadcrumb {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--secondary);
+        }
+
+        /* Project Cards Navigation (Sticky) */
+        .project-nav {
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 70px;
+            z-index: 99;
+            padding: 20px 5%;
+        }
+
+        .project-nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .project-nav-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .p-nav-link {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 500;
+            white-space: nowrap;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .p-nav-link:hover, .p-nav-link.active {
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Project Cards System */
+        .projects-section {
+            padding-top: 60px;
+        }
+
+        .project-card {
+            display: flex;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 40px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .project-image {
+            flex: 0 0 350px;
+            position: relative;
+            background-color: var(--bg-card);
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        .project-status {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .status-ongoing { border-left: 3px solid #10B981; }
+        .status-completed { border-left: 3px solid var(--accent); }
+
+        .project-content {
+            padding: 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .project-grid-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .info-block {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .info-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .project-team {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .team-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .team-members {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Smaller cards for Student Projects */
+        .student-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .student-project-card {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--secondary);
+            border-radius: var(--radius);
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        .student-project-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        .sp-title {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .sp-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .sp-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .sp-researcher {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .sp-type {
+            background: var(--bg-card);
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0A192F;
+            color: #fff;
+            padding: 80px 5% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-about h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-about p {
+            color: #8892B0;
+            font-size: 0.9rem;
+            margin-top: 16px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            color: var(--accent);
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #8892B0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links ul li a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #8892B0;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .project-card { flex-direction: column; }
+            .project-image { flex: 0 0 250px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: var(--bg-main);
+                flex-direction: column;
+                padding: 100px 40px;
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 1.125rem; }
+            .hamburger { display: block; z-index: 1001; }
+            
+            .page-title { font-size: 2.5rem; }
+            .project-content { padding: 24px; }
+            .project-title { font-size: 1.25rem; }
+            .project-grid-info { grid-template-columns: 1fr; gap: 16px; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                ASCII Lab
+                <span class="logo-sub">IIT Bhilai</span>
+            </a>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="people.html">People</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="projects.html" class="active">Projects</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Sponsored Research Projects</h1>
+            <p class="page-description">Externally funded research initiatives translating fundamental cyber-physical concepts and applied mechatronics into real-world technological solutions.</p>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>Projects</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="project-nav">
+        <div class="project-nav-container">
+            <a href="#sponsored" class="p-nav-link active">Active Projects</a>
+            <a href="#completed" class="p-nav-link">Completed Projects</a>
+            <a href="#student" class="p-nav-link">Student Theses</a>
+        </div>
+    </div>
+
+    <section id="sponsored" class="projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Active Projects</h2>
+                <span class="section-subtitle">Ongoing Research Grants</span>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="project-status status-ongoing">Active</span>
+                    <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&q=80&w=800" alt="Unmanned Aircraft System">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Capacity building for Human Resource Development in Unmanned Aircraft System (Drone and related Technology)</h3>
+                    
+                    <div class="project-grid-info">
+                        <div class="info-block">
+                            <span class="info-label">Funding Agency</span>
+                            <span class="info-value">MeitY – (SwaYan)</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Amount Sanctioned</span>
+                            <span class="info-value">₹213.12 Lacs</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Duration</span>
+                            <span class="info-value">5 years (2022–2027)</span>
+                        </div>
+                    </div>
+
+                    <div class="project-team">
+                        <span class="team-label">Role:</span>
+                        <span class="team-members">Principal Investigator</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="project-status status-ongoing">Active</span>
+                    <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800" alt="Fruit Ripening Research">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Development of a Data-driven Fruit Ripening Detector based on Bio-Impedance of Senescent Fruits: Mangoes and Papayas</h3>
+                    
+                    <div class="project-grid-info">
+                        <div class="info-block">
+                            <span class="info-label">Funding Agency</span>
+                            <span class="info-value">SERB – (CRG)</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Amount Sanctioned</span>
+                            <span class="info-value">₹36.50 Lacs</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Duration</span>
+                            <span class="info-value">3 years (2024–2027)</span>
+                        </div>
+                    </div>
+
+                    <div class="project-team">
+                        <span class="team-label">Role:</span>
+                        <span class="team-members">Principal Investigator</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="project-status status-ongoing">Active</span>
+                    <img src="<a href="https://ibb.co/R4pSkjr7"><img src="https://i.ibb.co/vvxB6XyD/Gemini-Generated-Image-bfbi8dbfbi8dbfbi.png" alt="Gemini-Generated-Image-bfbi8dbfbi8dbfbi" border="0" /></a>">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Multipurpose Smart Agro-bot for Developing a Robust Data Model for Crop Condition Monitoring and Fertilizer Dispensing in Vertical Farming</h3>
+                    
+                    <div class="project-grid-info">
+                        <div class="info-block">
+                            <span class="info-label">Funding Agency</span>
+                            <span class="info-value">IBITF – (EIR-PRAYAS)</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Amount Sanctioned</span>
+                            <span class="info-value">₹27.30 Lacs</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Duration</span>
+                            <span class="info-value">1 year (2024–2025)</span>
+                        </div>
+                    </div>
+
+                    <div class="project-team">
+                        <span class="team-label">Role:</span>
+                        <span class="team-members">Co-Principal Investigator</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="project-status status-ongoing">Active</span>
+                    <img src="<a href="https://ibb.co/twqtPLfZ"><img src="https://i.ibb.co/Xf7gkYBy/Gemini-Generated-Image-6ae6wt6ae6wt6ae6.png" alt="Gemini-Generated-Image-6ae6wt6ae6wt6ae6" border="0"></a>">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Improving Financial Condition of Farmers through Real Time Precision Agriculture: Plant Disease Detection</h3>
+                    
+                    <div class="project-grid-info">
+                        <div class="info-block">
+                            <span class="info-label">Funding Agency</span>
+                            <span class="info-value">IBITF, DST – (NM-ICPS)</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Amount Sanctioned</span>
+                            <span class="info-value">₹8.20 Lacs</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Duration</span>
+                            <span class="info-value">1 year (2024–2025)</span>
+                        </div>
+                    </div>
+
+                    <div class="project-team">
+                        <span class="team-label">Role:</span>
+                        <span class="team-members">Co-Principal Investigator</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="completed" class="projects-section" style="background-color: var(--bg-card);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Completed Projects</h2>
+                <span class="section-subtitle">Successfully Delivered Research & Courses</span>
+            </div>
+
+            <div class="project-card" style="background-color: var(--bg-main);">
+                <div class="project-image">
+                    <span class="project-status status-completed">Completed</span>
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800" alt="Circuit Element Design">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Design and Fabrication of Fractor – The New Circuit Element</h3>
+                    
+                    <div class="project-grid-info">
+                        <div class="info-block">
+                            <span class="info-label">Funding Agency</span>
+                            <span class="info-value">IIT Bhilai – (RIG)</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Amount Sanctioned</span>
+                            <span class="info-value">₹5.53 Lacs</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Duration</span>
+                            <span class="info-value">3 years (2021–2024)</span>
+                        </div>
+                    </div>
+
+                    <div class="project-team">
+                        <span class="team-label">Role:</span>
+                        <span class="team-members">Principal Investigator</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" style="background-color: var(--bg-main);">
+                <div class="project-image">
+                    <span class="project-status status-completed">Completed</span>
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800" alt="Short-Term Courses">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Series of Short-Term Courses (5 FDP, 8 STP)</h3>
+                    
+                    <div class="project-grid-info">
+                        <div class="info-block">
+                            <span class="info-label">Funding Agency</span>
+                            <span class="info-value">CSVTU-TEQIP III</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Amount Sanctioned</span>
+                            <span class="info-value">₹31.33 Lacs</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Duration</span>
+                            <span class="info-value">1 year (2019–2020)</span>
+                        </div>
+                    </div>
+
+                    <div class="project-team">
+                        <span class="team-label">Role:</span>
+                        <span class="team-members">Principal Investigator (Coordinator)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" style="background-color: var(--bg-main);">
+                <div class="project-image">
+                    <span class="project-status status-completed">Completed</span>
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" alt="Training Program">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">1 STTP/FDP</h3>
+                    
+                    <div class="project-grid-info">
+                        <div class="info-block">
+                            <span class="info-label">Funding Agency</span>
+                            <span class="info-value">CSVTU-TEQIP III</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Amount Sanctioned</span>
+                            <span class="info-value">₹8.89 Lacs</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Duration</span>
+                            <span class="info-value">5 days (2019)</span>
+                        </div>
+                    </div>
+
+                    <div class="project-team">
+                        <span class="team-label">Role:</span>
+                        <span class="team-members">Principal Investigator (Coordinator)</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="student" class="projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Notable Student Projects</h2>
+                <span class="section-subtitle">PhD, MTech, and BTech Theses</span>
+            </div>
+
+            <div class="student-projects-grid">
+                
+                <div class="student-project-card">
+                    <h3 class="sp-title">Consensus Framework and Flocking Theory for Multi-agent Systems</h3>
+                    <p class="sp-desc">Developed distributed control algorithms enabling coordinated formation and flocking behavior across multiple autonomous agents, addressing communication delays.</p>
+                    <div class="sp-meta">
+                        <span class="sp-researcher">Swaninda Ghosh, Rohit Bose</span>
+                        <span class="sp-type">BTech Thesis</span>
+                    </div>
+                </div>
+
+                <div class="student-project-card">
+                    <h3 class="sp-title">Fractional Order Colpitts Oscillators for Bio/Chemical Sensors</h3>
+                    <p class="sp-desc">Designed and implemented a modified fractional-order oscillator specifically tuned for highly sensitive impedimetric analysis of biological excretions.</p>
+                    <div class="sp-meta">
+                        <span class="sp-researcher">Agniv Tapadar</span>
+                        <span class="sp-type">PhD Thesis</span>
+                    </div>
+                </div>
+
+                <div class="student-project-card">
+                    <h3 class="sp-title">Fungal Disease Detection via Plant Pathological Scale</h3>
+                    <p class="sp-desc">Utilized advanced image classification techniques and CNN architectures to automate the severity assessment of early blight in agricultural crops.</p>
+                    <div class="sp-meta">
+                        <span class="sp-researcher">Niladri Biswas</span>
+                        <span class="sp-type">MTech Thesis</span>
+                    </div>
+                </div>
+
+                <div class="student-project-card">
+                    <h3 class="sp-title">ExoSkeleton Design and Control</h3>
+                    <p class="sp-desc">Ongoing research focused on the electromechanical design and real-time kinematic control systems for assistive human-robot interaction devices.</p>
+                    <div class="sp-meta">
+                        <span class="sp-researcher">Yogendra Kumar</span>
+                        <span class="sp-type">PhD Research</span>
+                    </div>
+                </div>
+
+                <div class="student-project-card">
+                    <h3 class="sp-title">Biomedical Feature Extraction: ECG and Cell Malignancy</h3>
+                    <p class="sp-desc">Designed data-analysis-based fractional order notch filters to isolate highly accurate diagnostic features from noisy biomedical signals.</p>
+                    <div class="sp-meta">
+                        <span class="sp-researcher">Aashuli Sahare</span>
+                        <span class="sp-type">MTech Thesis</span>
+                    </div>
+                </div>
+
+                <div class="student-project-card">
+                    <h3 class="sp-title">Nondestructive Ripeness Detection System using Computer Vision</h3>
+                    <p class="sp-desc">Developed a machine-learning-aided optical system for the real-time classification and ripeness grading of bananas in supply chain environments.</p>
+                    <div class="sp-meta">
+                        <span class="sp-researcher">Satyam Sharma</span>
+                        <span class="sp-type">MTech Thesis</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>ASCII Lab</h3>
+                    <p>Applied Sensing and Control for Intelligent India.<br>Department of Electrical Engineering,<br>Indian Institute of Technology Bhilai.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="research.html">Research Areas</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="contact.html">Contact Form</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Research</h4>
+                    <ul>
+                        <li><a href="research.html">Underwater Robotics</a></li>
+                        <li><a href="research.html">Computer Vision</a></li>
+                        <li><a href="research.html">Smart Sensors</a></li>
+                        <li><a href="research.html">Autonomous Nav</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter (X)</a></li>
+                        <li><a href="#">Google Scholar</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ASCII Lab, IIT Bhilai. All rights reserved.</p>
+                <p>Designed for Academic Excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sticky Navigation (Main Header)
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile Hamburger Menu
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                if(navLinks.classList.contains('active')) {
+                    header.classList.add('scrolled');
+                } else if(window.scrollY <= 50) {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Active Tab Highlighting for Project Nav
+            const sections = document.querySelectorAll('.projects-section');
+            const navItems = document.querySelectorAll('.p-nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    // Adjusted for fixed headers
+                    if (pageYOffset >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href').includes(current)) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

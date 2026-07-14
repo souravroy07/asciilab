@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research | ASCII Lab | IIT Bhilai</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #143766;
+            --secondary: #1F4E8C;
+            --accent: #A6822E;
+            --bg-main: #FFFFFF;
+            --bg-card: #F7F9FC;
+            --border: #DCE3EE;
+            --text-main: #14203A;
+            --text-muted: #55606E;
+            
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Source Sans 3', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(20, 55, 102, 0.05);
+            --shadow-md: 0 8px 24px rgba(20, 55, 102, 0.08);
+            --shadow-lg: 0 16px 48px rgba(20, 55, 102, 0.12);
+            --radius: 8px;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        section {
+            padding: 100px 5%;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding: 15px 5%;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-sub {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary);
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 24px;
+        }
+
+        .breadcrumb {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--secondary);
+        }
+
+        /* Research Domains */
+        .research-container {
+            padding: 80px 5%;
+            background-color: var(--bg-main);
+        }
+
+        .domain-row {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 100px;
+        }
+
+        .domain-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .domain-image {
+            flex: 1;
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .domain-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(20,55,102,0.1), transparent);
+            pointer-events: none;
+        }
+
+        .domain-image img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.7s ease;
+        }
+
+        .domain-row:hover .domain-image img {
+            transform: scale(1.03);
+        }
+
+        .domain-content {
+            flex: 1;
+        }
+
+        .domain-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        
+        .domain-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .domain-content h2 {
+            font-size: 2.25rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .domain-content p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        /* Applications/Tags Pill Design */
+        .applications-container {
+            margin-bottom: 30px;
+        }
+
+        .applications-title {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .tag:hover {
+            border-color: var(--accent);
+            background-color: var(--bg-main);
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0A192F;
+            color: #fff;
+            padding: 80px 5% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-about h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-about p {
+            color: #8892B0;
+            font-size: 0.9rem;
+            margin-top: 16px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            color: var(--accent);
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #8892B0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links ul li a:hover {
+            color: #fff;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #8892B0;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .domain-row, .domain-row:nth-child(even) {
+                flex-direction: column;
+                gap: 40px;
+            }
+            .domain-image {
+                width: 100%;
+            }
+            .domain-image img {
+                height: 350px;
+            }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: var(--bg-main);
+                flex-direction: column;
+                padding: 100px 40px;
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 1.125rem; }
+            .hamburger { display: block; z-index: 1001; }
+            .page-title { font-size: 2.5rem; }
+            .domain-content h2 { font-size: 1.75rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                ASCII Lab
+                <span class="logo-sub">IIT Bhilai</span>
+            </a>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="research.html" class="active">Research</a></li>
+                    <li><a href="people.html">People</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Research Areas</h1>
+            <p class="page-subtitle">ASCII Lab conducts highly interdisciplinary research focusing on intelligent mechatronics, advanced signal processing, and autonomous cyber-physical systems to solve critical real-world challenges.</p>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>Research</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="research-container">
+        <div class="container">
+
+            <div class="domain-row" id="bio-sensors">
+                <div class="domain-image">
+                    <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&q=80&w=1000" alt="Biological Sensor Data">
+                </div>
+                <div class="domain-content">
+                    <div class="domain-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <h2>Machine Learning in Biological Sensors</h2>
+                    <p>Leveraging advanced machine learning architectures (such as LDA-SVM and KNN classifiers) to interpret complex bio-impedance spectroscopy data. Our research focuses on developing disposable, highly sensitive diagnostic tools for rapid bioexcretion sensing and fluid analysis.</p>
+                    
+                    <div class="applications-container">
+                        <div class="applications-title">Key Focus Areas</div>
+                        <div class="tag-list">
+                            <span class="tag">Biological Sensors</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Impedimetry Analysis</span>
+                            <span class="tag">Point-of-Care (PoC) Devices</span>
+                        </div>
+                    </div>
+                    <a href="publications.html" class="btn btn-outline">Read Publications</a>
+                </div>
+            </div>
+
+            <div class="domain-row" id="uav-systems">
+                <div class="domain-image">
+                    <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&q=80&w=1000" alt="Unmanned Aerial Vehicle">
+                </div>
+                <div class="domain-content">
+                    <div class="domain-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 12l10 5 10-5M2 17l10 5 10-5"/></svg>
+                    </div>
+                    <h2>UAV Systems & Underwater Drones</h2>
+                    <p>Pioneering robust Guidance, Navigation, and Control (GNC) algorithms for autonomous platforms. We develop intelligent multi-agent consensus frameworks for Unmanned Aerial Systems (UAS) and specialized localization paradigms for Remotely Operated Vehicles (ROVs) operating in highly degraded subsea environments.</p>
+                    
+                    <div class="applications-container">
+                        <div class="applications-title">Key Focus Areas</div>
+                        <div class="tag-list">
+                            <span class="tag">Guidance, Navigation & Control</span>
+                            <span class="tag">UAV Systems</span>
+                            <span class="tag">Underwater Drones (ROV/AUV)</span>
+                            <span class="tag">Swarm Intelligence</span>
+                        </div>
+                    </div>
+                    <a href="projects.html" class="btn btn-outline">View Related Projects</a>
+                </div>
+            </div>
+
+            <div class="domain-row" id="precision-agriculture">
+                <div class="domain-image">
+                    <img src="https://theagcenter.com/wp-content/uploads/2025/06/Revolutionizing-California-Farming.jpg">
+                </div>
+                <div class="domain-content">
+                    <div class="domain-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <h2>Precision Agriculture</h2>
+                    <p>Deploying state-of-the-art Deep Learning models and Digital Image Processing techniques to optimize agricultural yields. Our work encompasses non-destructive ripeness detection using computer vision, automated assessment of plant pathology, and UAV-assisted crop monitoring.</p>
+                    
+                    <div class="applications-container">
+                        <div class="applications-title">Key Focus Areas</div>
+                        <div class="tag-list">
+                            <span class="tag">Image Processing</span>
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">Crop Health Monitoring</span>
+                            <span class="tag">Non-Destructive Testing</span>
+                        </div>
+                    </div>
+                    <a href="projects.html" class="btn btn-outline">Explore Technologies</a>
+                </div>
+            </div>
+
+            <div class="domain-row" id="signal-processing">
+                <div class="domain-image">
+                    <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&q=80&w=1000" alt="Electronics and Signal Processing">
+                </div>
+                <div class="domain-content">
+                    <div class="domain-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    </div>
+                    <h2>Sensor Electronics & Signal Processing</h2>
+                    <p>Designing sophisticated fractional-order filters and processing architectures to extract high-accuracy diagnostic features from physiological signals (ECG, EEG, EMG). This domain also extends into the mechanical design and real-time kinematic control systems for assistive Exoskeletons.</p>
+                    
+                    <div class="applications-container">
+                        <div class="applications-title">Key Focus Areas</div>
+                        <div class="tag-list">
+                            <span class="tag">ECG, EEG, EMG Analysis</span>
+                            <span class="tag">Exoskeleton Design</span>
+                            <span class="tag">Fractional Order Systems</span>
+                            <span class="tag">Sensor Electronics</span>
+                        </div>
+                    </div>
+                    <a href="publications.html" class="btn btn-outline">Read Publications</a>
+                </div>
+            </div>
+            
+            <div class="domain-row" id="data-analysis">
+                <div class="domain-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000" alt="Data Analysis and Visualization">
+                </div>
+                <div class="domain-content">
+                    <div class="domain-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                    </div>
+                    <h2>Interdisciplinary Data Analysis</h2>
+                    <p>Synthesizing and evaluating complex datasets across disparate engineering fields. Whether parsing underwater robotic telemetry for structural health monitoring or executing predictive modeling for formability in micro-incremental sheet forming (μ-SPIF) processes, we specialize in high-level analytical abstraction.</p>
+                    
+                    <div class="applications-container">
+                        <div class="applications-title">Key Focus Areas</div>
+                        <div class="tag-list">
+                            <span class="tag">Underwater Robotics Data</span>
+                            <span class="tag">Incremental Forming Models</span>
+                            <span class="tag">Predictive Analytics</span>
+                            <span class="tag">Cyber Physical Systems</span>
+                        </div>
+                    </div>
+                    <a href="about.html" class="btn btn-outline">Learn About Our Lab</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>ASCII Lab</h3>
+                    <p>Applied Sensing and Control for Intelligent India.<br>Electrical Engineering and Computer Science,<br>Indian Institute of Technology Bhilai.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="research.html">Research Areas</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="contact.html">Contact Form</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Research</h4>
+                    <ul>
+                        <li><a href="#bio-sensors">Biological Sensors</a></li>
+                        <li><a href="#uav-systems">UAV Systems</a></li>
+                        <li><a href="#precision-agriculture">Precision Agriculture</a></li>
+                        <li><a href="#signal-processing">Signal Processing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter (X)</a></li>
+                        <li><a href="#">Google Scholar</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ASCII Lab, IIT Bhilai. All rights reserved.</p>
+                <p>Designed for Academic Excellence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sticky Navigation
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile Hamburger Menu
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                if(navLinks.classList.contains('active')) {
+                    header.classList.add('scrolled');
+                } else if(window.scrollY <= 50) {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
